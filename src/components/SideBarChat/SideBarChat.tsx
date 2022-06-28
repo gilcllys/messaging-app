@@ -9,7 +9,6 @@ const SideBarChat = () => {
     setSeed(Math.floor(Math.random()*500))
     
   },[])
-  console.log(seed)
   return (
     <div className={styles.SideBarChat}>
       <Avatar src={`https://avatars.dicebear.com/api/human/${seed}.svg`} />
