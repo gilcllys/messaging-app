@@ -1,10 +1,16 @@
-import React from 'react'
+import React from "react"
+import styles from "./App.module.css"
+import SideBar from "./components/SideBar"
+
+
 function App() {
 
 
   return (
-    <div className="App">
-      
+    <div className={styles.App}>
+      <div className={styles.appBody}>
+        <SideBar />
+      </div>
     
     </div>
   )
