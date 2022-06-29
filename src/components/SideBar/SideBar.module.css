@@ -7,7 +7,7 @@
 .SideBarHeader{
     display: flex;
     justify-content: space-between;
-    padding: 30px;
+    padding: 26px;
     border-right: 1px solid lightgray;
 }
 
