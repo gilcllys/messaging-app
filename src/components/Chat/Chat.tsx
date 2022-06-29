@@ -1,6 +1,7 @@
 import React from 'react'
 import { Avatar, IconButton } from '@mui/material'
-import { AttachFile, MoreVert,SearchOutlined } from '@mui/icons-material'
+import { AttachFile, MoreVert,SearchOutlined,InsertEmoticon } from '@mui/icons-material'
+import MicIcon from '@mui/icons-material/Mic'
 import styles from './Chat.module.css'
 
 
@@ -62,7 +63,16 @@ const Chat = () => {
                 </span>
             </p>
         </div>
-        <div className={styles.ChatFooter}></div>
+        <div className={styles.ChatFooter}>
+            <InsertEmoticon />
+            <form>
+                <input placeholder='Type a message' type="text"/>
+                <button type='submit'>
+                    Send a message
+                </button>
+            </form>
+            <MicIcon />
+        </div>
     </div>
   )
 }

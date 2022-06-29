@@ -48,10 +48,17 @@
 
 .SideBarSearchContainer > input{
     border: none;
+    border-radius: 10px;
     outline-width: 0;
     margin-left: 10px;
     width: 90%;
+    outline: none;
 }
+
+.SideBarSearchContainer > input:focus{
+    background-color: lightcyan;
+}
+
 
 .SideBarChats{
     flex: 1;
