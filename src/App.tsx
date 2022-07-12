@@ -22,7 +22,7 @@ function App() {
       cluster:'sa1'
     })
     const channel = pusher.subscribe('message')
-    channel.bind('inserted', (data: any)=>{
+    channel.bind('inserted', (data: never)=>{
       setMessages([...messages, data])
     })
     return()=>{
