@@ -13,7 +13,7 @@ const Chat = ({ messages }) => {
   const [seed, setSeed] = React.useState(0);
   const [input, setInput] = React.useState("");
 
-  async function sendMessage(e) {
+  async function sendMessage(e:any) {
     e.preventDefault();
     await fetch("https://messaging-mern-app.herokuapp.com/messages/new", {
       method: "POST",
@@ -53,7 +53,7 @@ const Chat = ({ messages }) => {
         </div>
       </div>
       <div className={styles.ChatBody}>
-        {messages.map((message) => (
+        {messages.map((message:any) => (
           <p
             key={message._id}
             className={`${styles.ChatMessage} ${
