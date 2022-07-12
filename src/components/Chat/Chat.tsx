@@ -5,7 +5,7 @@ import MicIcon from '@mui/icons-material/Mic'
 import styles from './Chat.module.css'
 
 
-const Chat = () => {
+const Chat = ({messages}) => {
     const [seed, setSeed] = React.useState(0)
     React.useEffect( ()=>{
         setSeed(Math.floor(Math.random() * 500))
@@ -32,7 +32,6 @@ const Chat = () => {
             </div>
         </div>
         <div className={styles.ChatBody}>
-
             <p className={styles.ChatMessage}>
                 <span className={`${styles.ChatName}`}>
                     Nabendu

@@ -3,22 +3,38 @@ import styles from "./App.module.css"
 import SideBar from "./components/SideBar/SideBar"
 import Chat from "./components/Chat/Chat"
 import Pusher from "pusher-js"
-require('dotenv').config()
+import { Sync } from "@mui/icons-material"
 
 function App() {
   
   const [messages, setMessages] = React.useState([])
+
   React.useEffect(()=>{
-    const pusher = new Pusher("5c7d7b52edd5fc840b09",{
+    async function getData(){
+      const data =  await fetch('http://localhost:9000/messages/sync')
+      const json = await data.json()
+      setMessages(json)
+    }
+    getData()
+  },[])
+  React.useEffect(()=>{
+    const pusher = new Pusher(import.meta.env.VITE_PUSHER_KEY,{
       cluster:'sa1'
     })
-    
-  },[])
+    const channel = pusher.subscribe('message')
+    channel.bind('inserted', (data)=>{
+      setMessages([...messages, data])
+    })
+    return()=>{
+      channel.unbind_all()
+      channel.unsubscribe()
+    }
+  },[messages])
   return (
     <div className={styles.App}>
       <div className={styles.appBody}>
         <SideBar />
-        <Chat />
+        <Chat messages={messages} />
       </div>
     </div>
   )
