@@ -1,79 +1,88 @@
-import React from 'react'
-import { Avatar, IconButton } from '@mui/material'
-import { AttachFile, MoreVert,SearchOutlined,InsertEmoticon } from '@mui/icons-material'
-import MicIcon from '@mui/icons-material/Mic'
-import styles from './Chat.module.css'
+import React from "react";
+import { Avatar, IconButton } from "@mui/material";
+import {
+  AttachFile,
+  MoreVert,
+  SearchOutlined,
+  InsertEmoticon,
+} from "@mui/icons-material";
+import MicIcon from "@mui/icons-material/Mic";
+import styles from "./Chat.module.css";
 
+const Chat = ({ messages }) => {
+  const [seed, setSeed] = React.useState(0);
+  const [input, setInput] = React.useState("");
 
-const Chat = ({messages}) => {
-    const [seed, setSeed] = React.useState(0)
-    React.useEffect( ()=>{
-        setSeed(Math.floor(Math.random() * 500))
-    },[])
+  async function sendMessage(e) {
+    e.preventDefault();
+    await fetch("http://localhost:9000/messages/new", {
+      method: "POST",
+      body: JSON.stringify({
+        message: input,
+        name: "thewebdev",
+        timestamp: new Date().toISOString(),
+        received: true,
+      }),
+      headers:{'Content-type':'application/json'}
+    });
+    setInput("")
+  }
+
+  React.useEffect(() => {
+    setSeed(Math.floor(Math.random() * 500));
+  }, []);
 
   return (
     <div className={styles.Chat}>
-        <div className={styles.ChatHeader}>
-            <Avatar src={`https://avatars.dicebear.com/api/human/${seed}.svg`}/>
-            <div className={styles.ChatHeaderInfo}>
-                <h3>Room Name</h3>
-                <p>Last seen at ...</p>
-            </div>
-            <div className={styles.ChatHeaderRight}>
-                <IconButton>
-                    <SearchOutlined />
-                </IconButton>
-                <IconButton>
-                    <AttachFile />
-                </IconButton>
-                <IconButton>
-                    <MoreVert />
-                </IconButton>
-            </div>
+      <div className={styles.ChatHeader}>
+        <Avatar src={`https://avatars.dicebear.com/api/human/${seed}.svg`} />
+        <div className={styles.ChatHeaderInfo}>
+          <h3>Room Name</h3>
+          <p>Last seen at ...</p>
         </div>
-        <div className={styles.ChatBody}>
-            <p className={styles.ChatMessage}>
-                <span className={`${styles.ChatName}`}>
-                    Nabendu
-                </span>
-                This a message
-                <span className={styles.ChatTimesTamp}>
-                    {new Date().toUTCString()}
-                </span>
-            </p>
-
-            <p className={`${styles.ChatMessage} ${styles.ChatReciever}`}>
-                <span className={styles.ChatName}>
-                    Parag
-                </span>
-                This a message back
-                <span className={styles.ChatTimesTamp}>
-                    {new Date().toUTCString()}
-                </span>
-            </p>
-
-            <p className={`${styles.ChatMessage}`}>
-                <span className={styles.ChatName}>
-                    Nabendu
-                </span>
-                This a message 
-                <span className={styles.ChatTimesTamp}>
-                    {new Date().toUTCString()}
-                </span>
-            </p>
+        <div className={styles.ChatHeaderRight}>
+          <IconButton>
+            <SearchOutlined />
+          </IconButton>
+          <IconButton>
+            <AttachFile />
+          </IconButton>
+          <IconButton>
+            <MoreVert />
+          </IconButton>
         </div>
-        <div className={styles.ChatFooter}>
-            <InsertEmoticon />
-            <form>
-                <input placeholder='Type a message' type="text"/>
-                <button type='submit'>
-                    Send a message
-                </button>
-            </form>
-            <MicIcon />
-        </div>
+      </div>
+      <div className={styles.ChatBody}>
+        {messages.map((message) => (
+          <p
+            key={message._id}
+            className={`${styles.ChatMessage} ${
+              message.received && styles.ChatReciever
+            }`}
+          >
+            <span className={styles.ChatName}>{message.name}</span>
+            {message.message}
+            <span className={styles.ChatTimesTamp}>{message.timestamp}</span>
+          </p>
+        ))}
+      </div>
+      <div className={styles.ChatFooter}>
+        <InsertEmoticon />
+        <form>
+          <input
+            value={input}
+            onChange={(e) => setInput(e.target.value)}
+            placeholder="Type a message"
+            type="text"
+          />
+          <button onClick={sendMessage} type="submit">
+            Send a message
+          </button>
+        </form>
+        <MicIcon />
+      </div>
     </div>
-  )
-}
+  );
+};
 
-export default Chat
+export default Chat;
