@@ -15,7 +15,7 @@ const Chat = ({ messages }) => {
 
   async function sendMessage(e) {
     e.preventDefault();
-    await fetch("http://localhost:9000/messages/new", {
+    await fetch("https://messaging-mern-app.herokuapp.com/messages/new", {
       method: "POST",
       body: JSON.stringify({
         message: input,

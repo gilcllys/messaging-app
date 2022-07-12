@@ -11,7 +11,7 @@ function App() {
 
   React.useEffect(()=>{
     async function getData(){
-      const data =  await fetch('http://localhost:9000/messages/sync')
+      const data =  await fetch('https://messaging-mern-app.herokuapp.com/messages/sync')
       const json = await data.json()
       setMessages(json)
     }
